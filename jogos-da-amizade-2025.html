@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jogos da Amizade 2025 – Proposta de redesign</title>
+<style>
+:root{
+  --navy:#102A43; --blue:#1976D2; --blue-l:#E8F1FA; --white:#fff;
+  --gray-l:#F4F6F8; --gray-d:#263238; --yellow:#F9A825; --line:#D5DEE7;
+  --radius:14px; --shadow:0 2px 10px rgba(16,42,67,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;color:var(--gray-d);background:var(--gray-l);line-height:1.6;font-size:16px}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--yellow);color:var(--navy);padding:8px 14px;border-radius:8px;z-index:100;font-weight:700}
+.skip:focus{left:8px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* header */
+header{background:var(--navy);position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;font-size:1.05rem;line-height:1.1}
+.brand small{display:block;font-weight:500;color:#BCD3EA;font-size:.72rem;letter-spacing:.04em}
+nav ul{display:flex;gap:6px;list-style:none;align-items:center}
+nav a.nl{display:inline-flex;align-items:center;justify-content:center;min-width:104px;height:44px;padding:0 14px;color:#fff;text-decoration:none;border-radius:10px;font-weight:600;font-size:.95rem}
+nav a.nl:hover{background:rgba(255,255,255,.12)}
+nav a.nl[aria-current="page"]{background:var(--blue)}
+nav a.nl.login{background:var(--yellow);color:var(--navy);font-weight:800}
+nav a.nl.login[aria-current="page"]{outline:2px solid #fff}
+.more{position:relative}
+.more button{width:44px;height:44px;border:0;border-radius:10px;background:transparent;color:#fff;font-size:1.4rem;cursor:pointer}
+.more button:hover{background:rgba(255,255,255,.12)}
+.menu{display:none;position:absolute;right:0;top:50px;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.25);min-width:220px;padding:6px;z-index:60}
+.menu.open{display:block}
+.menu a{display:block;padding:11px 14px;border-radius:8px;color:var(--gray-d);text-decoration:none;font-weight:600}
+.menu a:hover{background:var(--blue-l)}
+.burger{display:none;width:48px;height:44px;border:0;background:transparent;color:#fff;font-size:1.6rem;border-radius:10px;cursor:pointer}
+
+/* hero */
+.hero{background:linear-gradient(135deg,var(--navy),#1b4a78);color:#fff;padding:56px 0 64px}
+.hero .grid{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center}
+.eyebrow{display:inline-block;background:var(--yellow);color:var(--navy);font-weight:800;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:99px;margin-bottom:14px}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin-bottom:14px}
+.hero p{color:#DCE8F5;max-width:54ch;margin-bottom:24px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;min-width:150px;padding:0 22px;border-radius:12px;border:2px solid transparent;font:700 1rem inherit;font-family:inherit;text-decoration:none;cursor:pointer}
+.btn.primary{background:var(--yellow);color:var(--navy)}
+.btn.primary:hover{background:#ffb93c}
+.btn.ghost{border-color:#fff;color:#fff;background:transparent}
+.btn.ghost:hover{background:rgba(255,255,255,.12)}
+.btn.blue{background:var(--blue);color:#fff}
+.btn.blue:hover{background:#1565c0}
+.btn.line{border-color:var(--blue);color:var(--blue);background:#fff}
+.hero .art{display:flex;justify-content:center}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:-34px;position:relative}
+.stat{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;text-align:center}
+.stat b{display:block;font-size:1.7rem;color:var(--blue)}
+.stat span{font-size:.9rem;color:#4a5b68}
+
+/* sections */
+main{min-height:60vh}
+.page{display:none;padding-bottom:64px}
+.page.active{display:block}
+.pagehead{background:var(--blue-l);border-bottom:1px solid var(--line);padding:30px 0;margin-bottom:32px}
+.crumb{font-size:.88rem;color:#4a5b68;margin-bottom:6px}
+.crumb a{font-weight:600}
+h2.t{font-size:clamp(1.6rem,3.5vw,2.2rem);color:var(--navy);line-height:1.2}
+.lead{color:#3b4b57;max-width:70ch;margin-top:8px}
+h3{color:var(--navy)}
+.section{margin-top:44px}
+.section>h2{font-size:1.5rem;color:var(--navy);margin-bottom:6px}
+.section>p.sub{color:#4a5b68;margin-bottom:20px}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+
+/* modalidades – cards iguais */
+.mod{display:flex;flex-direction:column;align-items:center;text-align:center;height:260px;padding:22px 18px;text-decoration:none;color:var(--gray-d);background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);transition:transform .15s,border-color .15s;cursor:pointer;font-family:inherit;font-size:1rem;width:100%}
+.mod:hover{transform:translateY(-3px);border-color:var(--blue)}
+.mod .ic{width:84px;height:84px;border-radius:50%;background:var(--blue-l);display:grid;place-items:center;margin-bottom:12px;flex:none}
+.mod .ic svg{width:52px;height:52px}
+.mod b{font-size:1.1rem;color:var(--navy)}
+.mod small{color:#4a5b68;margin-top:4px;display:block}
+.mod .go{margin-top:auto;color:var(--blue);font-weight:700;font-size:.92rem}
+
+/* regras */
+.rules{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;counter-reset:r}
+.rule{background:#fff;border:1px solid var(--line);border-left:6px solid var(--blue);border-radius:var(--radius);padding:20px 20px 20px 22px;box-shadow:var(--shadow)}
+.rule .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-weight:800;margin-bottom:8px}
+.rule h3{font-size:1.1rem;margin-bottom:6px}
+.rule p{font-size:1rem;color:var(--gray-d)}
+.rule mark{background:#FFF1CC;color:var(--navy);font-weight:700;padding:0 4px;border-radius:4px}
+.note{background:#FFF8E1;border:1px solid #F3D88A;border-radius:var(--radius);padding:16px 20px;margin-top:20px;color:#5a4300}
+.sign{text-align:center;margin-top:32px;color:var(--navy)}
+.sign p{font-weight:700;font-size:1.1rem}
+
+/* jogos */
+.filters{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:22px;box-shadow:var(--shadow)}
+.field{display:flex;flex-direction:column;gap:4px;min-width:170px;flex:1}
+label{font-weight:700;font-size:.9rem;color:var(--navy)}
+select,input[type=text],input[type=email],input[type=password]{height:46px;border:2px solid #9FB3C8;border-radius:10px;padding:0 12px;font:inherit;background:#fff;color:var(--gray-d)}
+select:focus,input:focus{border-color:var(--blue);outline:none;box-shadow:0 0 0 3px rgba(25,118,210,.25)}
+.day{margin-bottom:28px}
+.day h3{display:flex;align-items:center;gap:10px;font-size:1.2rem;margin-bottom:12px}
+.day h3 .dt{background:var(--navy);color:#fff;padding:3px 12px;border-radius:8px;font-size:.95rem}
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px}
+.game{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.game .top{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--blue-l);padding:10px 16px}
+.badge{display:inline-block;font-size:.78rem;font-weight:800;padding:3px 10px;border-radius:99px;background:var(--navy);color:#fff}
+.badge.y{background:var(--yellow);color:var(--navy)}
+.game .body{padding:14px 16px}
+.game h4{font-size:1.1rem;color:var(--navy);margin-bottom:10px}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;text-align:center;margin-bottom:12px}
+.team{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.88rem;font-weight:600}
+.shield{width:44px;height:44px;border-radius:50%;border:2px dashed #9FB3C8;display:grid;place-items:center;color:#6b7f90;font-weight:800}
+.vs .x{font-weight:800;color:var(--blue)}
+dl.info{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.92rem;border-top:1px solid var(--line);padding-top:10px}
+dl.info dt{font-weight:700;color:var(--navy)}
+dl.info dd{color:#3b4b57}
+dd.na{font-style:italic;color:#6b7a86}
+.empty{text-align:center;background:#fff;border:2px dashed var(--line);border-radius:var(--radius);padding:36px;color:#4a5b68}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.seg{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px;margin-bottom:18px;box-shadow:var(--shadow)}
+.seg button{height:44px;min-width:170px;padding:0 18px;border:0;border-radius:9px;background:transparent;font-weight:700;font-size:.98rem;font-family:inherit;color:var(--navy);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.chiplabel{font-weight:700;font-size:.82rem;color:#4a5b68;margin:10px 0 6px;text-transform:uppercase;letter-spacing:.06em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.chip{height:44px;padding:0 18px;border-radius:99px;border:2px solid #9FB3C8;background:#fff;color:var(--navy);font-weight:700;font-size:.95rem;font-family:inherit;cursor:pointer}
+.chip:hover{border-color:var(--blue)}
+.chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.match{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.match .mh{display:flex;justify-content:space-between;align-items:center;background:var(--blue-l);padding:8px 16px}
+.mn{font-weight:800;color:var(--navy)}
+.badge.okb{background:#1B6E3A}
+.badge.wait{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.mt{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:start;padding:16px 12px 10px}
+.tm{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;font-size:.88rem;font-weight:600;min-width:0}
+.tm .tn{overflow-wrap:anywhere;line-height:1.25}
+.crest{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:.85rem;border:3px solid #fff;box-shadow:0 0 0 2px var(--line);flex:none}
+.tm.win{color:var(--navy);font-weight:800}
+.tm.win .tn::after{content:" ✓";color:#1B6E3A}
+.tm.lose{color:#5b6b78;font-weight:500}
+.sc{display:flex;align-items:center;gap:8px;font-size:1.8rem;font-weight:800;color:var(--navy);padding-top:8px}
+.sc i{font-style:normal;font-size:1rem;color:var(--blue)}
+.mf{padding:8px 16px 12px;font-size:.85rem;color:#5d6d79;font-style:italic;border-top:1px solid var(--line)}
+.gofoot{padding:0 16px 14px}
+.gofoot .btn{height:42px;min-width:0;width:100%;font-size:.92rem}
+
+/* login */
+.loginwrap{max-width:440px;margin:0 auto}
+.form{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:30px}
+.form .logo{display:flex;justify-content:center;margin-bottom:10px}
+.form h2{text-align:center;color:var(--navy);margin-bottom:4px}
+.form .sub{text-align:center;color:#4a5b68;margin-bottom:20px}
+.form .field{margin-bottom:14px}
+.err{color:#B3261E;font-size:.88rem;font-weight:600;min-height:1.2em}
+input.bad{border-color:#B3261E}
+.pw{position:relative}
+.pw input{width:100%;padding-right:84px}
+.pw button{position:absolute;right:6px;top:6px;height:34px;border:0;background:var(--blue-l);color:var(--blue);font-weight:700;border-radius:8px;padding:0 12px;cursor:pointer}
+.row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin:6px 0 18px;font-size:.92rem}
+.form .btn{width:100%}
+.alt{text-align:center;margin-top:16px}
+.status{margin-top:14px;padding:12px 14px;border-radius:10px;font-weight:600;display:none}
+.status.ok{display:block;background:#E3F5E8;color:#14532d}
+.status.info{display:block;background:var(--blue-l);color:var(--navy)}
+
+/* ajuda */
+details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:0 18px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:700;color:var(--navy);padding:14px 0;min-height:48px}
+details p{padding-bottom:14px}
+
+/* footer */
+footer{background:var(--navy);color:#DCE8F5;padding:36px 0 28px}
+footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px}
+footer h4{color:#fff;margin-bottom:10px}
+footer a{color:#BCD3EA;text-decoration:none;display:block;padding:3px 0}
+footer a:hover{color:#fff;text-decoration:underline}
+.social{display:flex;gap:10px;margin-top:6px}
+.social a{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,.12);color:#fff;font-weight:800;padding:0}
+.social a:hover{background:var(--blue);text-decoration:none}
+.copy{border-top:1px solid rgba(255,255,255,.18);margin-top:24px;padding-top:16px;font-size:.88rem;color:#9FB8D1}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 20px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:200;display:none;max-width:90vw}
+.toast.show{display:block}
+
+/* responsivo */
+@media (max-width:900px){
+  .hero .grid{grid-template-columns:1fr}
+  .hero .art{order:-1}
+  footer .cols{grid-template-columns:1fr}
+  .burger{display:inline-block}
+  nav{position:absolute;left:0;right:0;top:68px;background:var(--navy);display:none;padding:10px 20px 18px;box-shadow:0 8px 16px rgba(0,0,0,.3)}
+  nav.open{display:block}
+  nav ul{flex-direction:column;align-items:stretch}
+  nav a.nl{justify-content:flex-start;width:100%}
+  .more .menu{position:static;box-shadow:none;margin-top:4px}
+  .more button{width:100%;text-align:left;padding:0 14px;font-size:1rem}
+  .stats{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  .games{grid-template-columns:1fr}
+  .rules{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  .seg{display:flex;width:100%}
+  .seg button{flex:1;min-width:0}
+  .tgrid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Pular para o conteúdo</a>
+
+<!-- SVG: logo (símbolo reutilizável) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 64 64">
+    <path d="M32 3 56 12v20c0 14-10 24-24 29C18 56 8 46 8 32V12z" fill="#1976D2" stroke="#F9A825" stroke-width="3"/>
+    <circle cx="32" cy="29" r="13" fill="#fff"/>
+    <path d="M32 16v26M19 29h26M23 20c6 4 12 4 18 0M23 38c6-4 12-4 18 0" stroke="#102A43" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M22 47c3 3 7 4 10 4s7-1 10-4" stroke="#F9A825" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="m32 5 2 4 4 .5-3 3 .8 4.2L32 14.600 28.200 16.700 29 12.500l-3-3 4-.5z" fill="#F9A825" transform="translate(0 -1) scale(1)"/>
+  </symbol>
+</svg>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#inicio" data-nav="inicio" aria-label="Jogos da Amizade 2025 – ir para o início">
+      <svg width="44" height="44" aria-hidden="true"><use href="#logo"/></svg>
+      <span>Jogos da Amizade<small>EDIÇÃO 2025 · ENSINO FUND. II</small></span>
+    </a>
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">☰</button>
+    <nav id="nav" aria-label="Principal">
+      <ul>
+        <li><a class="nl" href="#inicio" data-nav="inicio">Início</a></li>
+        <li><a class="nl" href="#modalidades" data-nav="modalidades">Modalidades</a></li>
+        <li><a class="nl" href="#jogos" data-nav="jogos">Jogos</a></li>
+        <li><a class="nl" href="#regras" data-nav="regras">Regras</a></li>
+        <li><a class="nl login" href="#login" data-nav="login">Login</a></li>
+        <li class="more">
+          <button id="moreBtn" aria-haspopup="true" aria-expanded="false" aria-label="Mais opções">⋮</button>
+          <div class="menu" id="moreMenu" role="menu">
+            <a role="menuitem" href="#ajuda" data-nav="ajuda">Ajuda e perguntas frequentes</a>
+            <a role="menuitem" href="#jogos" data-nav="jogos">Cronograma completo</a>
+            <a role="menuitem" href="#regras" data-nav="regras">Orientações gerais</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+<!-- INÍCIO -->
+<section class="page" id="p-inicio" aria-labelledby="h-inicio">
+  <div class="hero">
+    <div class="wrap grid">
+      <div>
+        <span class="eyebrow">28/11 a 05/12 · 2025</span>
+        <h1 id="h-inicio">Jogos da Amizade 2025</h1>
+        <p>Uma celebração do esporte, da união e da convivência saudável entre os alunos do Ensino Fundamental II (6º, 7º, 8º e 9º anos). Mais do que vencer, queremos incentivar cooperação, respeito, solidariedade, espírito esportivo e alegria.</p>
+        <div class="btns">
+          <a class="btn primary" href="#jogos" data-nav="jogos">Ver jogos</a>
+          <a class="btn ghost" href="#regras" data-nav="regras">Ler as regras</a>
+        </div>
+      </div>
+      <div class="art" aria-hidden="true">
+        <svg width="250" height="250"><use href="#logo"/></svg>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><b>6 dias</b><span>de competição</span></div>
+      <div class="stat"><b>7 modalidades</b><span>esportivas</span></div>
+      <div class="stat"><b>17/11</b><span>tabelas no SISTEMA</span></div>
+    </div>
+    <div class="section">
+      <h2>Por onde começar</h2>
+      <p class="sub">Atalhos para o que você mais precisa durante o evento.</p>
+      <div class="cards">
+        <a class="card" href="#jogos" data-nav="jogos" data-view="cron" style="text-decoration:none;color:inherit"><h3>📅 Cronograma</h3><p>Datas, horários, turmas e modalidades de cada dia.</p></a>
+        <a class="card" href="#regras" data-nav="regras" style="text-decoration:none;color:inherit"><h3>📋 Orientações gerais</h3><p>As 10 regras sobre times, uniforme, pontualidade e comportamento.</p></a>
+        <a class="card" href="#modalidades" data-nav="modalidades" style="text-decoration:none;color:inherit"><h3>🏅 Modalidades</h3><p>Veja quais esportes terão disputa e em quais dias.</p></a>
+      </div>
+      <div class="note"><b>Atenção:</b> as tabelas completas de jogos ficam disponíveis no <b>SISTEMA</b> a partir de <b>17/11/2025</b>. Os horários são previsões e podem mudar por causa de WO ou questões administrativas.</div>
+      <div class="section">
+        <h2>Programação</h2>
+        <p class="sub">De 28 de novembro a 5 de dezembro.</p>
+        <div class="cards">
+          <div class="card"><span class="badge y">28/11 · Sexta</span><h3 style="margin-top:8px">Abertura e Atletismo</h3><p>Participação de todas as turmas.</p></div>
+          <div class="card"><span class="badge y">01 a 04/12</span><h3 style="margin-top:8px">Fase de jogos</h3><p>8º e 9º anos às 07:00 · 6º e 7º anos às 13:00.</p></div>
+          <div class="card"><span class="badge y">05/12 · Sexta</span><h3 style="margin-top:8px">Finais</h3><p>Finais com todo o segmento: 8º e 9º anos às 07:00 e 6º e 7º anos às 13:00.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODALIDADES -->
+<section class="page" id="p-modalidades" aria-labelledby="h-mod">
+  <div class="pagehead"><div class="wrap">
+    <div class="crumb"><a href="#inicio" data-nav="inicio">Início</a> › Modalidades</div>
+    <h2 class="t" id="h-mod">Modalidades esportivas</h2>
+    <p class="lead">Toque em uma modalidade para ver as tabelas, os confrontos e os placares.</p>
+  </div></div>
+  <div class="wrap"><div class="cards" id="modGrid"></div></div>
+</section>
+
+<!-- JOGOS -->
+<section class="page" id="p-jogos" aria-labelledby="h-jogos">
+  <div class="pagehead"><div class="wrap">
+    <div class="crumb"><a href="#inicio" data-nav="inicio">Início</a> › Jogos</div>
+    <h2 class="t" id="h-jogos">Jogos e resultados</h2>
+    <p class="lead">Escolha uma modalidade para ver confrontos e placares, ou abra o cronograma para ver o que acontece em cada dia.</p>
+  </div></div>
+  <div class="wrap">
+    <div class="seg" role="group" aria-label="Tipo de visualização">
+      <button type="button" id="tabRes" data-view="res" aria-pressed="true">Tabelas e resultados</button>
+      <button type="button" id="tabCron" data-view="cron" aria-pressed="false">Cronograma</button>
+    </div>
+
+    <div id="viewRes">
+      <div class="chiplabel" id="lblSport">Modalidade</div>
+      <div class="chips" id="sportChips" role="group" aria-labelledby="lblSport"></div>
+      <div class="chiplabel" id="lblCat">Categoria</div>
+      <div class="chips" id="catChips" role="group" aria-labelledby="lblCat"></div>
+      <p id="resCount" role="status" aria-live="polite" style="margin:16px 0 14px;font-weight:600;color:var(--navy)"></p>
+      <div id="tableList"></div>
+    </div>
+
+    <div id="viewCron" hidden>
+      <form class="filters" id="filters" aria-label="Filtros do cronograma" onsubmit="return false">
+        <div class="field"><label for="fDia">Dia</label>
+          <select id="fDia"><option value="">Todos os dias</option></select></div>
+        <div class="field"><label for="fAno">Turmas</label>
+          <select id="fAno"><option value="">Todas</option><option>6º e 7º anos</option><option>8º e 9º anos</option><option>Todas as turmas</option></select></div>
+        <div class="field"><label for="fMod">Modalidade</label>
+          <select id="fMod"><option value="">Todas</option></select></div>
+        <button type="button" class="btn line" id="fClear" style="min-width:140px">Limpar filtros</button>
+      </form>
+      <p id="count" role="status" aria-live="polite" style="margin-bottom:14px;font-weight:600;color:var(--navy)"></p>
+      <div id="gamesList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- REGRAS -->
+<section class="page" id="p-regras" aria-labelledby="h-regras">
+  <div class="pagehead"><div class="wrap">
+    <div class="crumb"><a href="#inicio" data-nav="inicio">Início</a> › Regras</div>
+    <h2 class="t" id="h-regras">Jogos da Amizade 2025 – Orientações Gerais</h2>
+    <p class="lead">Os Jogos da Amizade 2025 estão chegando! Para garantir que o evento aconteça de forma organizada e justa, leia atentamente as orientações abaixo.</p>
+  </div></div>
+  <div class="wrap">
+    <div class="rules" id="rulesGrid"></div>
+    <div class="sign">
+      <p>Contamos com a colaboração e o espírito esportivo de todos!</p>
+      <p style="font-weight:500;margin-top:6px">Desejamos a cada participante excelentes jogos, marcados por respeito, amizade e alegria!</p>
+      <p style="margin-top:12px">Profs. Diego, Paty e Stephanie</p>
+    </div>
+  </div>
+</section>
+
+<!-- LOGIN -->
+<section class="page" id="p-login" aria-labelledby="h-login">
+  <div class="wrap" style="padding-top:40px">
+    <div class="loginwrap">
+      <form class="form" id="loginForm" novalidate>
+        <div class="logo"><svg width="64" height="64" aria-hidden="true"><use href="#logo"/></svg></div>
+        <h2 id="h-login">Admin do Aluno</h2>
+        <p class="sub">Entre para acessar o SISTEMA dos Jogos da Amizade.</p>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input id="email" type="email" autocomplete="email" placeholder="nome@exemplo.com" aria-describedby="emailErr">
+          <div class="err" id="emailErr" aria-live="polite"></div>
+        </div>
+        <div class="field">
+          <label for="senha">Senha</label>
+          <div class="pw">
+            <input id="senha" type="password" autocomplete="current-password" placeholder="Sua senha" aria-describedby="senhaErr">
+            <button type="button" id="showPw" aria-pressed="false">Mostrar</button>
+          </div>
+          <div class="err" id="senhaErr" aria-live="polite"></div>
+        </div>
+        <div class="row">
+          <label style="font-weight:500;display:flex;gap:8px;align-items:center"><input type="checkbox" id="lembrar" style="width:18px;height:18px"> Lembrar de mim</label>
+          <a href="#" id="forgot">Esqueci minha senha</a>
+        </div>
+        <button class="btn blue" type="submit">Entrar</button>
+        <div class="status" id="loginStatus" role="status" aria-live="polite"></div>
+        <p class="alt"><a href="#inicio" data-nav="inicio">← Voltar ao início</a></p>
+      </form>
+      <p style="text-align:center;margin-top:14px;font-size:.88rem;color:#4a5b68">Protótipo de interface: nenhum dado é enviado ou armazenado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AJUDA -->
+<section class="page" id="p-ajuda" aria-labelledby="h-ajuda">
+  <div class="pagehead"><div class="wrap">
+    <div class="crumb"><a href="#inicio" data-nav="inicio">Início</a> › Ajuda</div>
+    <h2 class="t" id="h-ajuda">Ajuda e perguntas frequentes</h2>
+    <p class="lead">Respostas rápidas baseadas nas orientações oficiais dos jogos.</p>
+  </div></div>
+  <div class="wrap" style="max-width:820px">
+    <details><summary>Onde vejo os horários dos meus jogos?</summary><p>No SISTEMA. As tabelas completas ficam disponíveis a partir de 17/11/2025. Os horários são previsões e podem mudar.</p></details>
+    <details><summary>Quanto tempo de tolerância existe para chegar?</summary><p>São 5 minutos. Se a equipe estiver incompleta no horário, perde o direito à disputa (WO).</p></details>
+    <details><summary>Quantos reservas posso ter?</summary><p>Até 3 reservas, além do número oficial de jogadores da modalidade. Reservas adicionais só com autorização do professor até 17/11/2025.</p></details>
+    <details><summary>O que posso vestir para jogar?</summary><p>É obrigatório estar uniformizado. Calça jeans é proibida e o calçado deve ser tênis ou chuteira.</p></details>
+    <details><summary>Posso jogar por duas equipes?</summary><p>Não. Um mesmo jogador não pode atuar por duas equipes, e misturar alunos de turmas diferentes só é permitido com autorização prévia do professor.</p></details>
+    <details><summary>Quem pode entrar nos espaços de competição?</summary><p>Apenas alunos do Ensino Fundamental II do UNASP.</p></details>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><svg width="40" height="40" aria-hidden="true"><use href="#logo"/></svg><b style="color:#fff">Jogos da Amizade 2025</b></div>
+        <p>Integração, cooperação e espírito esportivo.</p>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <a href="#inicio" data-nav="inicio">Início</a>
+        <a href="#modalidades" data-nav="modalidades">Modalidades</a>
+        <a href="#jogos" data-nav="jogos">Jogos</a>
+        <a href="#regras" data-nav="regras">Regras</a>
+        <a href="#login" data-nav="login">Login</a>
+      </div>
+      <div>
+        <h4>Redes e links</h4>
+        <div class="social">
+          <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" aria-label="Google (abre em nova aba)" title="Google">G</a>
+          <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X (abre em nova aba)" title="Twitter / X">X</a>
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook (abre em nova aba)" title="Facebook">f</a>
+        </div>
+      </div>
+    </div>
+    <div class="copy">Proposta de redesign criada para fins de estudo (Heurísticas de Nielsen). Conteúdo baseado no site original dos Jogos da Amizade 2025 (desenvolvido por David Mendes Gonsaga; organização: Profs. Diego, Paty e Stephanie).</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const ICONS = {
+  futbase:'<circle cx="32" cy="32" r="22" fill="#fff" stroke="#102A43" stroke-width="3"/><path d="M32 20l10 7-4 12H26l-4-12z" fill="#102A43"/><path d="M32 10v10M42 27l11-3M38 39l7 9M26 39l-7 9M22 27l-11-3" stroke="#102A43" stroke-width="3" stroke-linecap="round"/>',
+  futsal:'<circle cx="32" cy="32" r="22" fill="#fff" stroke="#1976D2" stroke-width="3"/><path d="M32 20l10 7-4 12H26l-4-12z" fill="#1976D2"/><path d="M32 10v10M42 27l11-3M38 39l7 9M26 39l-7 9M22 27l-11-3" stroke="#1976D2" stroke-width="3" stroke-linecap="round"/>',
+  volei:'<circle cx="32" cy="32" r="22" fill="#fff" stroke="#102A43" stroke-width="3"/><path d="M32 10c-4 14 2 24 20 28M12 24c14 0 22 8 20 30M10 40c12-14 26-14 40-8" fill="none" stroke="#F9A825" stroke-width="3.500" stroke-linecap="round"/>',
+  queimada:'<circle cx="32" cy="32" r="22" fill="#F9A825" stroke="#102A43" stroke-width="3"/><path d="M14 22c10 6 26 6 36 0M14 42c10-6 26-6 36 0" fill="none" stroke="#102A43" stroke-width="3"/>',
+  handebol:'<circle cx="32" cy="32" r="22" fill="#fff" stroke="#1976D2" stroke-width="3"/><path d="M12 26h40M12 38h40M32 10v44" stroke="#1976D2" stroke-width="3" fill="none"/><circle cx="32" cy="32" r="8" fill="#F9A825" stroke="#102A43" stroke-width="2"/>',
+  cambio:'<rect x="6" y="14" width="52" height="30" rx="3" fill="#E8F1FA" stroke="#102A43" stroke-width="3"/><path d="M6 24h52M6 34h52M20 14v30M32 14v30M44 14v30" stroke="#102A43" stroke-width="1.500"/><path d="M10 14v40M54 14v40" stroke="#102A43" stroke-width="4" stroke-linecap="round"/><circle cx="32" cy="52" r="6" fill="#F9A825" stroke="#102A43" stroke-width="2"/>',
+  atletismo:'<ellipse cx="32" cy="32" rx="24" ry="16" fill="#E8F1FA" stroke="#1976D2" stroke-width="3"/><ellipse cx="32" cy="32" rx="14" ry="8" fill="#fff" stroke="#1976D2" stroke-width="2"/><circle cx="32" cy="24" r="4" fill="#102A43"/><path d="M32 28v10l-6 8M32 38l7 8M24 32l8 2 8-5" stroke="#102A43" stroke-width="3" fill="none" stroke-linecap="round"/>',
+  abertura:'<path d="M20 52h24M32 52V30" stroke="#102A43" stroke-width="3" stroke-linecap="round"/><path d="M22 14h20v10a10 10 0 0 1-20 0z" fill="#F9A825" stroke="#102A43" stroke-width="3"/><path d="M22 18h-8c0 8 4 10 8 10M42 18h8c0 8-4 10-8 10" fill="none" stroke="#102A43" stroke-width="3"/>'
+};
+const MODS = [
+  {k:'Futsal', i:'futsal', d:'Masculino e Feminino'},
+  {k:'Futbase', i:'futbase', d:'Masculino, Feminino e Misto'},
+  {k:'Vôlei', i:'volei', d:'Masculino e Feminino'},
+  {k:'Queimada', i:'queimada', d:'Masculino, Feminino e Misto'},
+  {k:'Handebol', i:'handebol', d:'Feminino'},
+  {k:'Câmbio', i:'cambio', d:'Misto'},
+  {k:'Atletismo', i:'atletismo', d:'100 m, saltos em distância e arremesso de peso'}
+];
+const svg = n => '<svg viewBox="0 0 64 64" aria-hidden="true">'+ICONS[n]+'</svg>';
+
+/* Cronograma (conteúdo do site original) */
+const G = [];
+const add = (d,w,ano,per,mod,cat) => G.push({d,w,ano,per,mod,cat});
+add('28/11','Sexta-feira','Todas as turmas','07:00','Abertura','—');
+add('28/11','Sexta-feira','Todas as turmas','07:00','Atletismo – 100 metros','—');
+add('28/11','Sexta-feira','Todas as turmas','13:00','Atletismo – Saltos em distância','—');
+add('28/11','Sexta-feira','Todas as turmas','13:00','Atletismo – Arremesso de peso','—');
+add('01/12','Segunda-feira','8º e 9º anos','07:00','Futbase','Masculino');
+add('01/12','Segunda-feira','8º e 9º anos','07:00','Vôlei','Feminino');
+add('01/12','Segunda-feira','6º e 7º anos','13:00','Futbase','Misto');
+add('02/12','Terça-feira','8º e 9º anos','07:00','Queimada','Masculino');
+add('02/12','Terça-feira','8º e 9º anos','07:00','Queimada','Feminino');
+add('02/12','Terça-feira','6º e 7º anos','13:00','Queimada','Misto');
+add('03/12','Quarta-feira','8º e 9º anos','07:00','Vôlei','Masculino');
+add('03/12','Quarta-feira','8º e 9º anos','07:00','Handebol','Feminino');
+add('03/12','Quarta-feira','6º e 7º anos','13:00','Câmbio','Misto');
+add('04/12','Quinta-feira','8º e 9º anos','07:00','Futsal','Masculino');
+add('04/12','Quinta-feira','8º e 9º anos','07:00','Futbase','Feminino');
+add('04/12','Quinta-feira','6º e 7º anos','13:00','Futsal','Masculino');
+add('04/12','Quinta-feira','6º e 7º anos','13:00','Futsal','Feminino');
+add('05/12','Sexta-feira','8º e 9º anos','07:00','Finais','Todas as modalidades');
+add('05/12','Sexta-feira','6º e 7º anos','13:00','Finais','Todas as modalidades');
+
+const RULES = [
+ ['Formação de times','Cada equipe deve ter o número oficial de jogadores da modalidade e até <mark>3 reservas</mark>. Reservas adicionais só serão aceitos com autorização do professor até o dia <mark>17/11/2025</mark>. Após essa data, não haverá alterações, especialmente durante a competição.'],
+ ['Uniforme obrigatório','Todos os participantes devem estar uniformizados. É proibido o uso de <mark>calça jeans</mark>, e o calçado deve ser <mark>tênis ou chuteira</mark>.'],
+ ['Pontualidade','As equipes devem conferir o <mark>SISTEMA</mark> para verificar os horários dos jogos. Haverá <mark>tolerância de 5 minutos</mark>. A equipe incompleta no horário perderá o direito à disputa (<mark>WO</mark>).'],
+ ['Possíveis alterações','Os horários divulgados são previsões e podem sofrer ajustes por conta de <mark>WO</mark> ou questões administrativas. As equipes devem permanecer preparadas desde o início do período da modalidade.'],
+ ['Tabelas de jogos','As tabelas completas estarão disponíveis no <mark>SISTEMA</mark> a partir de <mark>17/11/2025</mark>.'],
+ ['Acesso restrito','Apenas alunos do <mark>Ensino Fundamental II do UNASP</mark> terão acesso aos espaços de competição.'],
+ ['Comportamento','Agressões físicas ou verbais, bem como desrespeito a árbitros, colegas ou professores, resultarão em <mark>suspensão dos jogos</mark> e encaminhamento à <mark>Direção</mark>. Cada participante deve agir com respeito, empatia e espírito esportivo.'],
+ ['Exclusividade de participação','Um mesmo jogador <mark>não pode atuar por duas equipes</mark>.'],
+ ['Formação por turmas','É proibido misturar alunos de turmas diferentes, salvo com <mark>autorização prévia do professor</mark>.'],
+ ['Torcida','A torcida deve incentivar seu time de forma positiva, sem ofensas aos adversários. Comportamentos inadequados resultarão em <mark>exclusão dos jogos</mark> e encaminhamento à Direção.']
+];
+
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const NA = '<dd class="na">Informação não disponível</dd>';
+
+/* Modalidades */
+$('#modGrid').innerHTML = MODS.map(m=>`
+  <button class="mod" data-mod="${m.k}" aria-label="Ver tabela de ${m.k}">
+    <span class="ic">${svg(m.i)}</span><b>${m.k}</b><small>${m.d}</small><span class="go">Ver tabela →</span>
+  </button>`).join('');
+
+/* Regras */
+$('#rulesGrid').innerHTML = RULES.map((r,i)=>`
+  <article class="rule"><span class="n" aria-hidden="true">${i+1}</span><h3>${r[0]}</h3><p>${r[1]}</p></article>`).join('');
+
+/* Jogos */
+const CATS = {
+  'Futsal':['Masculino','Feminino'],
+  'Futbase':['Masculino','Feminino','Misto'],
+  'Vôlei':['Masculino','Feminino'],
+  'Queimada':['Masculino','Feminino','Misto'],
+  'Handebol':['Feminino'],
+  'Câmbio':['Misto'],
+  'Atletismo':['Masculino']
+};
+const code = s => { const m = s.match(/\d[MT][A-D]/); return m ? m[0] : null; };
+const tm = s => { const p = s.split('|'); return {n:p[0], c:p[1] || code(p[0]) || '—'}; };
+const rows = a => a.map(r => ({a:tm(r[0]), sa:r[1], sb:r[2], b:tm(r[3])}));
+const TAB = {
+ 'Futsal': { Masculino: rows([
+  ['8MC - TIME 2 SNAKES',3,4,'TIME 1 9TA'],
+  ['9TC',1,0,'8MA TIME 2'],
+  ['TIME A MARACAIAS-8MB',1,0,'OS 00 TA NA CASA|9MD'],
+  ['TIME B MARACAIAS-8MB',1,3,'8MD WOLVES'],
+  ['8MC - TIME 1 SNAKES',3,1,'SHARKS - 8TB'],
+  ['8MA TIME 1',0,2,'8TA'],
+  ['FUTSAL WHITE TIGERS - 9MC',0,9,'9MA- BLACK PHANTERS'],
+  ['TIME 2 - 9MB|9MB',8,0,'TIME C MARACAIAS-8MB'],
+  ['9TB - PANDAS',2,0,'TIME 1 9TA'],
+  ['9TC',0,2,'TIME A MARACAIAS-8MB'],
+  ['8MD WOLVES',1,4,'8MC - TIME 1 SNAKES'],
+  ['8TA',0,2,'9MA- BLACK PHANTERS'],
+  ['TIME 2 - 9MB|9MB',2,0,'9TB - PANDAS'],
+  ['TIME A MARACAIAS-8MB',0,2,'8MC - TIME 1 SNAKES'],
+  ['9MA- BLACK PHANTERS',2,0,'TIME 2 - 9MB|9MB'],
+  ['TIME A MARACAIAS-8MB',0,1,'TIME 2 - 9MB|9MB'],
+  ['8MC - TIME 1 SNAKES',null,null,'9MA- BLACK PHANTERS']
+ ]) },
+ 'Futbase': {
+  Masculino: rows([
+   ['9MB FOXES',5,7,'TIME A MARACAIAS-8MB'],
+   ['8TA',8,6,'8MD WOLVES'],
+   ['WHITE TIGERS - 9MC',7,8,'SHARKS 8TB|8TB'],
+   ['OS 00 TA NA CASA|9MD',7,6,'8MC SNAKES'],
+   ['9TB - PANDAS',7,10,'9MA- BLACK PHANTERS'],
+   ['TIME 1 9TA',4,8,'TIME A MARACAIAS-8MB'],
+   ['8TA',6,5,'SHARKS 8TB|8TB'],
+   ['OS 00 TA NA CASA|9MD',0,10,'9MA- BLACK PHANTERS'],
+   ['TIME A MARACAIAS-8MB',6,5,'8TA'],
+   ['OS 00 TA NA CASA|9MD',5,7,'8TA'],
+   ['9MA- BLACK PHANTERS',null,null,'TIME A MARACAIAS-8MB']
+  ]),
+  Feminino: rows([
+   ['9MB - FOXES TIME 1',5,3,'9MD-LIONS'],
+   ['9MA - PANTERAS',4,12,'8MC - SNAKES'],
+   ['9TA/B - PUMAS&PANDAS',4,1,'8TB - SHARKS'],
+   ['8MA-OCTUPUS',0,1,'8MD - WOLVES'],
+   ['8MB-MARACAIAS',4,7,'LION 8TA|8TA'],
+   ['9MB - FOXES TIME 1',6,9,'8MC - SNAKES'],
+   ['9TA/B - PUMAS&PANDAS',10,8,'8MD - WOLVES'],
+   ['LION 8TA|8TA',12,13,'8MC - SNAKES'],
+   ['8MD - WOLVES',8,6,'LION 8TA|8TA'],
+   ['9TA/B - PUMAS&PANDAS',null,null,'8MC - SNAKES']
+  ])
+ },
+ 'Handebol': { Feminino: rows([
+  ['9TA/B - PUMAS&PANDAS',4,3,'8MD - WOLVES'],
+  ['8MA-OCTUPUS',3,2,'8MB-MARACAIAS'],
+  ['LIONS 9MD',0,1,'9MB - FOXES TIME 2'],
+  ['9MA - PANTERAS',1,2,'9MB - FOXES TIME 1'],
+  ['8MC - SNAKES',3,1,'LION 8TA|8TA'],
+  ['9TA/B - PUMAS&PANDAS',2,1,'8MA-OCTUPUS'],
+  ['9MB - FOXES TIME 2',0,2,'9MB - FOXES TIME 1'],
+  ['8MC - SNAKES',0,1,'9TA/B - PUMAS&PANDAS'],
+  ['9MB - FOXES TIME 2',0,2,'8MC - SNAKES'],
+  ['9MB - FOXES TIME 1',null,null,'9TA/B - PUMAS&PANDAS']
+ ]) },
+ 'Queimada': {
+  Masculino: rows([
+   ['8TA',1,0,'9TA MASCULINO'],
+   ['OS 00 TA NA CASA|9MD',0,3,'9TC'],
+   ['TIME A MARACAIAS-8MB',0,1,'9TB - PANDAS'],
+   ['WHITE TIGERS - 9MC',0,1,'9MA- BLACK PHANTERS'],
+   ['8MC SNAKES',1,0,'SHARKS 8TB|8TB'],
+   ['8MD WOLVES',0,1,'8MA'],
+   ['8TA',1,0,'9TC'],
+   ['9TB - PANDAS',1,0,'9MA- BLACK PHANTERS'],
+   ['8MC SNAKES',0,1,'8MA'],
+   ['8TA',1,0,'9TB - PANDAS'],
+   ['8MC SNAKES',1,0,'9TB - PANDAS'],
+   ['8MA',null,null,'8TA']
+  ]),
+  Feminino: rows([
+   ['8MD WOLVES - TIME 2',1,0,'8MC - SNAKES 2'],
+   ['9MB - FOXES',0,1,'9TA/B - PUMAS&PANDAS'],
+   ['LION 8TA|8TA',0,1,'8MA-OCTUPUS'],
+   ['9MA - PANTERAS',1,0,'8MB-MARACAIAS'],
+   ['LIONS 9MD',0,1,'LIONS 2 9MD'],
+   ['8MD WOLVES - TIME 1',0,1,'9MC - WHITE TIGERS'],
+   ['8TB - SHARKS',0,1,'9º ANO C|9TC'],
+   ['8MC - SNAKES',1,0,'8MD WOLVES - TIME 2'],
+   ['9TA/B - PUMAS&PANDAS',0,1,'8MA-OCTUPUS'],
+   ['9MA - PANTERAS',1,0,'LIONS 2 9MD'],
+   ['9MC - WHITE TIGERS',0,1,'9º ANO C|9TC'],
+   ['8MC - SNAKES',1,0,'8MA-OCTUPUS'],
+   ['9MA - PANTERAS',null,null,'9º ANO C|9TC'],
+   ['8MA-OCTUPUS',null,null,'Perdedor do jogo 13|?'],
+   ['8MC - SNAKES',null,null,'Vencedor do jogo 13|?']
+  ])
+ },
+ 'Vôlei': {
+  Masculino: rows([
+   ['8MA',1,0,'8MD WOLVES'],
+   ['OS 00 TA NA CASA|9MD',0,3,'WHITE TIGERS - 9MC'],
+   ['TIME 1 9TA',1,3,'9MA- BLACK PHANTERS'],
+   ['TIME A MARACAIAS-8MB',2,3,'9TB - PANDAS'],
+   ['SHARKS 8TB|8TB',3,0,'8MC - SNAKES'],
+   ['8MA',2,3,'WHITE TIGERS - 9MC'],
+   ['9MA- BLACK PHANTERS',3,2,'9TB - PANDAS'],
+   ['SHARKS 8TB|8TB',1,4,'WHITE TIGERS - 9MC'],
+   ['9TB - PANDAS',4,1,'SHARKS 8TB|8TB'],
+   ['9MA- BLACK PHANTERS',null,null,'WHITE TIGERS - 9MC']
+  ]),
+  Feminino: rows([
+   ['9MB - FOXES TIME 1',3,0,'9MB - FOXES TIME 2'],
+   ['8MD - WOLVES',0,3,'8TB - SHARKS'],
+   ['9TC',0,3,'9MC - WHITE TIGERS'],
+   ['8MC - SNAKES',0,3,'8MA-OCTUPUS'],
+   ['LION 8TA|8TA',3,0,'9MA - PANTERAS'],
+   ['9TA/B - PUMAS&PANDAS',3,0,'9MB - FOXES TIME 1'],
+   ['8TB - SHARKS',0,3,'9MC - WHITE TIGERS'],
+   ['8MA-OCTUPUS',3,0,'LION 8TA|8TA'],
+   ['9TA/B - PUMAS&PANDAS',3,0,'9MC - WHITE TIGERS'],
+   ['LION 8TA|8TA',0,3,'9MC - WHITE TIGERS'],
+   ['8MA-OCTUPUS',null,null,'9TA/B - PUMAS&PANDAS']
+  ])
+ }
+};
+
+const hue = c => { let h = 0; for (const ch of c) h = (h * 31 + ch.charCodeAt(0)) % 360; return h; };
+const crest = t => {
+  const unk = (t.c === '?' || t.c === '—');
+  const label = t.c === '?' ? '?' : (t.c === '—' ? t.n.slice(0,2).toUpperCase() : t.c);
+  const bg = t.c === '?' ? '#6b7a86' : 'hsl(' + hue(t.c === '—' ? t.n : t.c) + ' 55% 32%)';
+  return '<span class="crest" style="background:' + bg + '" aria-hidden="true">' + label + '</span>';
+};
+
+let curSport = 'Futsal', curCat = 'Masculino';
+
+function setView(v){
+  const res = (v !== 'cron');
+  $('#viewRes').hidden = !res;
+  $('#viewCron').hidden = res;
+  $('#tabRes').setAttribute('aria-pressed', res);
+  $('#tabCron').setAttribute('aria-pressed', !res);
+}
+document.addEventListener('click', e => {
+  const v = e.target.closest('[data-view]');
+  if (v) setView(v.dataset.view);
+});
+
+function renderRes(){
+  $('#sportChips').innerHTML = Object.keys(CATS).map(s =>
+    `<button type="button" class="chip" data-sport="${s}" aria-pressed="${s === curSport}">${s}</button>`).join('');
+  const cats = CATS[curSport];
+  if (!cats.includes(curCat)) curCat = cats[0];
+  $('#catChips').innerHTML = cats.map(c =>
+    `<button type="button" class="chip" data-cat="${c}" aria-pressed="${c === curCat}">${c}</button>`).join('');
+  const list = (TAB[curSport] || {})[curCat];
+  const out = $('#tableList'), cnt = $('#resCount');
+  if (!list) {
+    cnt.textContent = '';
+    out.innerHTML = `<div class="empty"><b>Informação não disponível</b><p>A tabela de ${curSport} (${curCat.toLowerCase()}) ainda não foi divulgada. Consulte o cronograma ou o SISTEMA.</p><p style="margin-top:12px"><button class="btn blue" type="button" data-view="cron">Ver cronograma</button></p></div>`;
+    return;
+  }
+  const done = list.filter(g => g.sa !== null).length;
+  cnt.textContent = `${curSport} · ${curCat}: ${list.length} jogos (${done} encerrados, ${list.length - done} aguardando)`;
+  const side = (t, w, l) => `<div class="tm${w ? ' win' : ''}${l ? ' lose' : ''}">${crest(t)}<span class="tn">${w ? '<span class="sr">Vencedor: </span>' : ''}${t.n}</span></div>`;
+  out.innerHTML = '<div class="tgrid">' + list.map((g, i) => {
+    const fin = g.sa !== null;
+    const wa = fin && g.sa > g.sb, wb = fin && g.sb > g.sa;
+    return `<article class="match" aria-label="Jogo ${i + 1}: ${g.a.n} contra ${g.b.n}">
+      <div class="mh"><span class="mn">Jogo ${i + 1}</span><span class="badge ${fin ? 'okb' : 'wait'}">${fin ? 'Encerrado' : 'Aguardando'}</span></div>
+      <div class="mt">${side(g.a, wa, wb)}<div class="sc" aria-label="${fin ? 'Placar ' + g.sa + ' a ' + g.sb : 'Placar ainda não disponível'}">${fin ? '<b>' + g.sa + '</b><i>×</i><b>' + g.sb + '</b>' : '<i>×</i>'}</div>${side(g.b, wb, wa)}</div>
+      <div class="mf">Horário e local: Informação não disponível</div>
+    </article>`;
+  }).join('') + '</div>';
+}
+$('#sportChips').addEventListener('click', e => {
+  const b = e.target.closest('[data-sport]'); if (!b) return;
+  curSport = b.dataset.sport; curCat = CATS[curSport][0]; renderRes();
+});
+$('#catChips').addEventListener('click', e => {
+  const b = e.target.closest('[data-cat]'); if (!b) return;
+  curCat = b.dataset.cat; renderRes();
+});
+
+/* Cronograma */
+const days = [...new Map(G.map(g => [g.d, g.w])).entries()];
+$('#fDia').insertAdjacentHTML('beforeend', days.map(([d, w]) => `<option value="${d}">${d} – ${w}</option>`).join(''));
+const modNames = [...new Set(G.map(g => g.mod.split(' – ')[0]))];
+$('#fMod').insertAdjacentHTML('beforeend', modNames.map(m => `<option>${m}</option>`).join(''));
+
+function renderGames(){
+  const d = $('#fDia').value, a = $('#fAno').value, m = $('#fMod').value;
+  const list = G.filter(g => (!d || g.d === d) && (!a || g.ano === a) && (!m || g.mod.split(' – ')[0] === m));
+  $('#count').textContent = list.length ? `${list.length} ${list.length === 1 ? 'item encontrado' : 'itens encontrados'}` : '';
+  if (!list.length) {
+    $('#gamesList').innerHTML = '<div class="empty"><b>Nada encontrado com esses filtros.</b><p>Tente outra combinação ou limpe os filtros.</p><p style="margin-top:12px"><button class="btn blue" id="emptyClear" type="button">Limpar filtros</button></p></div>';
+    $('#emptyClear').onclick = clearFilters; return;
+  }
+  const byDay = {};
+  list.forEach(g => (byDay[g.d] = byDay[g.d] || []).push(g));
+  $('#gamesList').innerHTML = Object.entries(byDay).map(([dt, gs]) => `
+    <div class="day"><h3><span class="dt">${dt}</span>${gs[0].w}</h3>
+    <div class="games">${gs.map(g => {
+      const sport = g.mod.split(' – ')[0];
+      const has = CATS[sport] && CATS[sport].includes(g.cat) && TAB[sport] && TAB[sport][g.cat];
+      return `<article class="game">
+        <div class="top"><span class="badge">${g.per}</span><span class="badge y">${g.ano}</span></div>
+        <div class="body">
+          <h4>${g.mod}${g.cat !== '—' ? ' · ' + g.cat : ''}</h4>
+          <dl class="info">
+            <dt>Categoria</dt><dd>${g.cat === '—' ? 'Todas' : g.cat}</dd>
+            <dt>Horário</dt><dd>${g.per} <span style="color:#5d6d79">(início do período)</span></dd>
+            <dt>Local</dt>${NA}
+          </dl>
+        </div>
+        ${has ? `<div class="gofoot"><button type="button" class="btn line" data-goto="${sport}|${g.cat}">Ver tabela e resultados</button></div>` : ''}
+      </article>`;
+    }).join('')}
+    </div></div>`).join('');
+}
+function clearFilters(){ ['fDia', 'fAno', 'fMod'].forEach(i => $('#' + i).value = ''); renderGames(); }
+['fDia', 'fAno', 'fMod'].forEach(i => $('#' + i).addEventListener('change', renderGames));
+$('#fClear').onclick = clearFilters;
+$('#gamesList').addEventListener('click', e => {
+  const b = e.target.closest('[data-goto]'); if (!b) return;
+  const [s, c] = b.dataset.goto.split('|');
+  curSport = s; curCat = c; renderRes(); setView('res'); window.scrollTo(0, 0);
+});
+$('#modGrid').addEventListener('click', e => {
+  const b = e.target.closest('.mod'); if (!b) return;
+  curSport = b.dataset.mod; curCat = CATS[curSport][0];
+  setView('res'); go('jogos'); renderRes();
+});
+setView('res');
+
+/* Navegação (hash) */
+const PAGES=['inicio','modalidades','jogos','regras','login','ajuda'];
+function go(p){ show(p); try{ history.replaceState(null,'','#'+p); }catch(_){} }
+/* navegação por clique (funciona mesmo em pré-visualizações que bloqueiam links com #) */
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[data-nav]');
+  if (!a) return;
+  e.preventDefault();
+  go(a.dataset.nav);
+});
+function show(p){
+  if(!PAGES.includes(p)) p='inicio';
+  $$('.page').forEach(s=>s.classList.toggle('active', s.id==='p-'+p));
+  $$('nav a.nl').forEach(a=>{ if(a.dataset.nav===p) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  const titles={inicio:'Início',modalidades:'Modalidades',jogos:'Jogos',regras:'Regras',login:'Login',ajuda:'Ajuda'};
+  document.title = titles[p]+' – Jogos da Amizade 2025';
+  closeMenus(); window.scrollTo(0,0);
+  if(p==='jogos'){ renderRes(); renderGames(); }
+}
+window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
+show(location.hash.slice(1)||'inicio');
+window.addEventListener('error', ev => console.error('Erro no site:', ev.message));
+
+/* menus */
+function closeMenus(){ $('#moreMenu').classList.remove('open'); $('#moreBtn').setAttribute('aria-expanded','false'); $('#nav').classList.remove('open'); $('#burger').setAttribute('aria-expanded','false'); }
+$('#moreBtn').onclick = e=>{ e.stopPropagation(); const o=$('#moreMenu').classList.toggle('open'); $('#moreBtn').setAttribute('aria-expanded',o); };
+$('#burger').onclick = e=>{ e.stopPropagation(); const o=$('#nav').classList.toggle('open'); $('#burger').setAttribute('aria-expanded',o); };
+document.addEventListener('click',e=>{ if(!e.target.closest('.more')) $('#moreMenu').classList.remove('open'); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeMenus(); });
+
+/* toast */
+let tt; function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),4200); }
+
+/* login */
+$('#showPw').onclick = ()=>{ const i=$('#senha'), s=i.type==='password'; i.type=s?'text':'password'; $('#showPw').textContent=s?'Ocultar':'Mostrar'; $('#showPw').setAttribute('aria-pressed',s); };
+$('#forgot').onclick = e=>{ e.preventDefault();
+  const em=$('#email').value.trim(); const st=$('#loginStatus');
+  if(!/^\S+@\S+\.\S+$/.test(em)){ setErr('email','Digite seu e-mail acima para receber o link de recuperação.'); $('#email').focus(); return; }
+  setErr('email',''); st.className='status info'; st.textContent='Se este e-mail estiver cadastrado, enviaremos um link para redefinir a senha. (Simulação)'; };
+function setErr(f,msg){ $('#'+(f==='email'?'emailErr':'senhaErr')).textContent=msg; $('#'+(f==='email'?'email':'senha')).classList.toggle('bad',!!msg); }
+$('#loginForm').addEventListener('submit',e=>{ e.preventDefault();
+  const em=$('#email').value.trim(), pw=$('#senha').value; let ok=true; const st=$('#loginStatus'); st.className='status';
+  if(!em){ setErr('email','Informe seu e-mail.'); ok=false; } else if(!/^\S+@\S+\.\S+$/.test(em)){ setErr('email','Formato inválido. Exemplo: nome@exemplo.com'); ok=false; } else setErr('email','');
+  if(!pw){ setErr('senha','Informe sua senha.'); ok=false; } else if(pw.length<6){ setErr('senha','A senha deve ter pelo menos 6 caracteres.'); ok=false; } else setErr('senha','');
+  if(ok){ st.className='status ok'; st.textContent='Dados válidos. Em um sistema real, você seria autenticado agora. (Simulação)'; }
+  else { (!em||!/^\S+@\S+\.\S+$/.test(em)?$('#email'):$('#senha')).focus(); }
+});
+</script>
+</body>
+</html>
